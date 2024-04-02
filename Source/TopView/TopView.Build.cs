@@ -18,7 +18,8 @@ public class TopView : ModuleRules
 			"InputCore", 
 			"HeadMountedDisplay", 
 			"NavigationSystem", 
-			"AIModule" 
+			"AIModule",
+			"ProceduralMeshComponent"
 		});
     }
 }
