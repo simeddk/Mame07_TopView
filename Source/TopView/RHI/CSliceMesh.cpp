@@ -1,27 +1,41 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "CSliceMesh.h"
+#include "Global.h"
+#include "Components/StaticMeshComponent.h"
+#include "ProceduralMeshComponent.h"
+#include "KismetProceduralMeshLibrary.h"
 
-// Sets default values
 ACSliceMesh::ACSliceMesh()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	CHelpers::CreateSceneComponent(this, &Root, "Root");
+	CHelpers::CreateSceneComponent(this, &OriginMesh, "OriginMesh", Root);
+	CHelpers::CreateSceneComponent(this, &CopiedMesh, "CopiedMesh", Root);
 
+	UStaticMesh* meshAsset;
+	CHelpers::GetAsset<UStaticMesh>(&meshAsset, "StaticMesh'/Game/Robot/SM_Robot.SM_Robot'");
+	OriginMesh->SetStaticMesh(meshAsset);
+
+	OriginMesh->SetVisibility(false);
+	OriginMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	CopiedMesh->SetSimulatePhysics(true);
+	CopiedMesh->bUseComplexAsSimpleCollision = false;
 }
 
-// Called when the game starts or when spawned
+void ACSliceMesh::OnConstruction(const FTransform& Transform)
+{
+	UKismetProceduralMeshLibrary::CopyProceduralMeshFromStaticMeshComponent
+	(
+		OriginMesh,
+		0,
+		CopiedMesh,
+		true
+	);
+}
+
 void ACSliceMesh::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
-// Called every frame
-void ACSliceMesh::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 

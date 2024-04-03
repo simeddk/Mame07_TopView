@@ -3,6 +3,8 @@
 
 ### Created By Great KKS ###
 *.zip
+*_BuiltData.uasset
+*_HLOD.*
 
 ### UnrealEngine ###
 # Visual Studio 2015 user specific files

@@ -39,6 +39,8 @@ protected:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 
+	void OnRButton();
+
 };
 
 
